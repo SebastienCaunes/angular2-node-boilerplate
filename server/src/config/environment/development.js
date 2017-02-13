@@ -4,6 +4,10 @@
 const path = require('path');
 
 module.exports = {
+    mongo: {
+        uri: process.env.MONGO_URI ||
+        'mongodb://localhost/my-db'
+    },
     env: process.env.NODE_ENV,
 
     // Root path of server
