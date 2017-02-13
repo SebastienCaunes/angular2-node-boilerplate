@@ -8,6 +8,8 @@
 node_modules
 
 # IDEs and editors
+*.iml
+.idea
 /front/.idea
 .project
 .classpath

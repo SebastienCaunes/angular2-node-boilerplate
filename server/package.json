@@ -1,0 +1,20 @@
+{
+  "name": "angular2-node-boilerplate-backend",
+  "version": "1.0.0",
+  "description": "backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "start-prod": "NODE_ENV=production node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "debug": "^2.6.0",
+    "express": "^4.14.1",
+    "method-override": "^2.3.7",
+    "morgan": "^1.7.0"
+  }
+}
