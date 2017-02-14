@@ -48,7 +48,6 @@ mongoose.connection.on("connected", function()
         {
             //Default User email :"john@doe.com" password:"johndoe" firstName: John  lastName:Doe }
             new User({
-                "_id" : ObjectId("58a321a883f632068b254f0b"),
                 "emailConfirmationToken" : "b386a97b49bfd50d66e5d154a02d996ec00f3bfa",
                 "email" : "john@doe.com",
                 "hashed_password" : "VvfROiot3RRUic/B5OkKUzECycxfWPwwNtmscwlFQA7fK4gRnP+/zr+rjkZk2/mD3WTTCRyz3vRammqEVxwj7w==",
