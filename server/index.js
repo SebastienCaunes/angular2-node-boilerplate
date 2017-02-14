@@ -40,7 +40,7 @@ mongoose.connection.on("connected", function()
     User.find({email: 'niconaute@gmail.com'}, function(err, results) {
         if(err)
         {
-            console.error('Error while trying to find user niconaute@gmail.com...', err);
+            console.error('Error while trying to find the default user john@doe.com...', err);
             return;
         }
 
@@ -54,8 +54,6 @@ mongoose.connection.on("connected", function()
                 "salt" : "z1L468ArrE5XF/6utucsIQ==",
                 "firstName" : "John",
                 "lastName" : "Doe",
-                "peopleToContactInCaseOfEmergency" : [],
-                "children" : [],
                 "emailConfirmed" : false,
                 "role" : "unknown",
                 "__v" : 0

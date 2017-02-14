@@ -20,26 +20,14 @@ var UserSchema = new Schema({
     lastName: String,
     role: {
         type: String,
-        enum: ['unknown', 'parent', 'admin'],
+        enum: ['unknown', 'user', 'admin'],
         default: 'unknown'
     },
     emailConfirmationToken: String,
     emailConfirmed: {
         type: Boolean,
         default: false
-    },
-    children: [{
-        fullName: String,
-        picture: String
-    }],
-    picture: String,
-    phoneNumber: String,
-    peopleToContactInCaseOfEmergency: [
-        {
-            fullName: String,
-            phoneNumber: String
-        }
-    ]
+    }
 });
 
 /**
