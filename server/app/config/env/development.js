@@ -11,7 +11,7 @@ module.exports = {
             user: 'john',
             pass: 'foo'
         },
-        defaultFromAddress: 'La MAM\'Oz<laadmin31@gmail.com>'
+        defaultFromAddress: 'Default sender<email@domain.com>'
     },
-    contactEmail: 'lightplay8@gmail.com'
+    contactEmail: 'email@domain.com'
 };

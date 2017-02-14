@@ -1,0 +1,24 @@
+<div>
+  <h2>Sign In</h2>
+
+  <form [formGroup]="signInForm" (ngSubmit)="submitForm(signInForm.value)">
+    <div [ngClass]="{'has-error':!signInForm.controls['email'].valid && signInForm.controls['email'].touched}">
+      <label>Email:</label>
+      <input type="text" placeholder="John" [formControl]="signInForm.controls['email']">
+      <div *ngIf="signInForm.controls['email'].hasError('required') && signInForm.controls['email'].touched">
+        You must include email.
+      </div>
+    </div>
+    <div [ngClass]="{'has-error':!signInForm.controls['password'].valid && signInForm.controls['password'].touched}">
+      <label>Password:</label>
+      <input type="password" placeholder="John" [formControl]="signInForm.controls['password']">
+
+      <div *ngIf="signInForm.controls['password'].hasError('required') && signInForm.controls['password'].touched">
+        You must include a password.
+      </div>
+    </div>
+    <div>
+      <button type="submit" [disabled]="!signInForm.valid">Submit</button>
+    </div>
+  </form>
+</div>

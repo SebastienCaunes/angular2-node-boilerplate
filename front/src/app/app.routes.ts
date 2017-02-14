@@ -7,18 +7,21 @@ import {ProjectListComponent} from "./project/project-list/project-list.componen
 import {ProjectDetailComponent} from "./project/project-detail/project-detail.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
-const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'user', component: UserComponent },
+import {authRoutes} from "./auth/auth.routes"
+
+const routes:Routes = [
+  {path: 'home', component: HomeComponent},
+  {path: 'user', component: UserComponent},
   //{ path: 'project', component: ProjectComponent },
-  { path: '**', component: PageNotFoundComponent }
+  ...authRoutes,
+  {path: '**', component: PageNotFoundComponent},
 ];
 
 
-
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 
-export class AppRoutesModule {}
+export class AppRoutesModule {
+}

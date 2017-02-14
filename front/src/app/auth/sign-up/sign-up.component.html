@@ -1,0 +1,38 @@
+<div>
+  <h2>Sign Up</h2>
+
+  <form [formGroup]="signUpForm" (ngSubmit)="submitForm(signUpForm.value)">
+    <div [ngClass]="{'has-error':!signUpForm.controls['firstName'].valid && signUpForm.controls['firstName'].touched}">
+      <label>First Name:</label>
+      <input type="text" placeholder="John" [formControl]="signUpForm.controls['firstName']">
+      <div *ngIf="signUpForm.controls['firstName'].hasError('required') && signUpForm.controls['firstName'].touched">
+        You must include a first name.
+      </div>
+    </div>
+    <div [ngClass]="{'has-error':!signUpForm.controls['lastName'].valid && signUpForm.controls['lastName'].touched}">
+      <label>Last Name:</label>
+      <input type="text" placeholder="John" [formControl]="signUpForm.controls['lastName']">
+      <div *ngIf="signUpForm.controls['lastName'].hasError('required') && signUpForm.controls['lastName'].touched">
+        You must include a last name.
+      </div>
+    </div>
+    <div [ngClass]="{'has-error':!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched}">
+      <label>Email:</label>
+      <input type="text" placeholder="John" [formControl]="signUpForm.controls['email']">
+      <div *ngIf="signUpForm.controls['email'].hasError('required') && signUpForm.controls['email'].touched">
+        You must include email.
+      </div>
+    </div>
+    <div [ngClass]="{'has-error':!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched}">
+      <label>Password:</label>
+      <input type="password" placeholder="John" [formControl]="signUpForm.controls['password']">
+
+      <div *ngIf="signUpForm.controls['password'].hasError('required') && signUpForm.controls['password'].touched">
+        You must include a password.
+      </div>
+    </div>
+    <div>
+      <button type="submit" [disabled]="!signUpForm.valid">Submit</button>
+    </div>
+  </form>
+</div>

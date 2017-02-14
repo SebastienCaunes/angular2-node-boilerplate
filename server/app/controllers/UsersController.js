@@ -60,7 +60,7 @@ exports.update = function(req, res) {
             var locals = {
                 host: req.headers.host,
                 email: user.email,
-                subject: 'Votre compte a bien été mis à jour sur la MAM\'Oz',
+                subject: 'Votre compte a bien été mis à jour',
                 title: 'Le compte ' + user.firstName + ' ' + user.lastName + ' a été mis à jour...',
                 message1: 'Votre compté a été mis à jour depuis votre page de profile.',
                 message2: 'Si vous n\'êtes pas responsable de ces modifications, veuillez nous en informer, nous supprimerons votre compte et nous vous en créerons un nouveau.',
@@ -115,11 +115,11 @@ exports.delete = function(req, res) {
             var locals = {
                 host: req.headers.host,
                 email: user.email,
-                subject: 'La MAM\'Oz vous souhaite une bonne continuation',
+                subject: 'Compte supprimé',
                 title: 'Aurevoir ' + user.firstName + ' ' + user.lastName + ',',
                 message1: 'Votre compte a été supprimé avec succès.',
                 message2: 'Bonne continuation, n\'hésitez pas à parler de nous autour de vous.',
-                message3: 'N\'hésitez pas non plus à fournir le lien suivant à vos contacts afin qu\'ils aient connaissance de la MAM\'Oz et des services proposés.',
+                message3: '',
                 link: 'http://' + req.headers.host
             };
             mails.sendOne('basic', locals, function ( err )
@@ -217,7 +217,7 @@ exports.storeNewUserAndSendRegistrationEmail = function(req, res, next)
                 var locals = {
                     host: req.headers.host,
                     email: user.email,
-                    subject: 'Bienvenue à la MAM\'Oz',
+                    subject: 'Bienvenue',
                     title: 'Bonjour ' + user.firstName + ' ' + user.lastName + ',',
                     message1: 'Votre compte a été créé avec succès.',
                     message2: 'Votre mot de passe est \'' + user.password + '\'. Il ne pourra vous être fourni plus tard, veillez à le conserver précieusement.' +
