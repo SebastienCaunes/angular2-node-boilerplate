@@ -19,4 +19,4 @@ module.exports = function(app)
 
     app.route('/projects/:id').delete(authorization.requiresLogin, ProjectController.delete);
 
-};)
+};
