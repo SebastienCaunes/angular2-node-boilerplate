@@ -22,9 +22,7 @@ module.exports = function(app)
     app.route('/login')
         .post(passport.authenticate('local', {
             failureFlash: true
-        }), function (req, res) {
-            res.send(req.user);
-        });
+        }), UsersController.me);
 
     // new user registration => only admin can do it !
     app.route('/register')

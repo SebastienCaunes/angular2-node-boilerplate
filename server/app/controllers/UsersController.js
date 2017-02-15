@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 /**
  * Logout
  */
-exports.signout = function(req, res) {
+exports.signout = function (req, res) {
     req.logout();
     res.sendStatus(200);
 };
@@ -18,8 +18,8 @@ exports.signout = function(req, res) {
 /**
  * List of Users
  */
-exports.all = function(req, res) {
-    User.find().sort('-name').exec(function(err, users) {
+exports.all = function (req, res) {
+    User.find().sort('-name').exec(function (err, users) {
         if (err) {
             res.sendStatus(500);
             return;
@@ -35,19 +35,25 @@ exports.all = function(req, res) {
  * @param req
  * @param res
  */
-exports.me = function(req, res) {
-    res.jsonp(req.user);
+exports.me = function (req, res) {
+    // clean sensitive user info
+    var user = req.user;
+    user.emailConfirmationToken = undefined;
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user._v = undefined;
+
+    res.jsonp(user);
 };
 
 /**
  * Update a user
  */
-exports.update = function(req, res) {
+exports.update = function (req, res) {
 
-    var updateUser = function(user)
-    {
+    var updateUser = function (user) {
         user = _.extend(user, req.body);
-        user.save(function(err, p_user) {
+        user.save(function (err, p_user) {
             if (err) {
                 console.error('Could not update user', err);
                 res.sendStatus(500);
@@ -67,8 +73,7 @@ exports.update = function(req, res) {
                 message3: 'En cas de problème, vous pouvez nous contacter par les moyens indiqués sur la page disponible depuis le lien suivant.',
                 link: 'http://' + req.headers.host + '/contact'
             };
-            mails.sendOne('basic', locals, function ( err )
-            {
+            mails.sendOne('basic', locals, function (err) {
                 console.log(err);
             });
 
@@ -78,11 +83,9 @@ exports.update = function(req, res) {
 
     // check if there is a userId,
     // if there is one, it means an "assistante maternelle" is updating the profile of someone else
-    if(req.params.userId !== undefined)
-    {
-        User.findById(req.params.userId, function(err, user) {
-            if(err)
-            {
+    if (req.params.userId !== undefined) {
+        User.findById(req.params.userId, function (err, user) {
+            if (err) {
                 console.error('Error while trying to find user with id ' + req.params.userId, err);
                 res.sendStatus(500);
                 return;
@@ -100,11 +103,10 @@ exports.update = function(req, res) {
 /**
  * Delete a user
  */
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
 
-    var deleteUser = function(user)
-    {
-        user.remove(function(err) {
+    var deleteUser = function (user) {
+        user.remove(function (err) {
             if (err) {
                 console.error('Could not delete user ' + user.email, err);
                 res.sendStatus(500);
@@ -122,22 +124,19 @@ exports.delete = function(req, res) {
                 message3: '',
                 link: 'http://' + req.headers.host
             };
-            mails.sendOne('basic', locals, function ( err )
-            {
+            mails.sendOne('basic', locals, function (err) {
                 console.log(err);
             });
-            
+
             res.sendStatus(200);
         });
     };
 
     // check if there is a userId,
     // if there is one, it means an "assistante maternelle" is deleting the profile of someone else
-    if(req.params.userId !== undefined)
-    {
-        User.findById(req.params.userId, function(err, user) {
-            if(err)
-            {
+    if (req.params.userId !== undefined) {
+        User.findById(req.params.userId, function (err, user) {
+            if (err) {
                 console.error('Error while trying to find user with id ' + req.params.userId, err);
                 res.sendStatus(500);
                 return;
@@ -156,7 +155,7 @@ exports.delete = function(req, res) {
 /**
  * Create user
  */
-exports.checkUserCanBeCreated = function(req, res, next) {
+exports.checkUserCanBeCreated = function (req, res, next) {
     var user = new User(req.body);
 
     // useless for now but could be useful if we do SSO later on
@@ -175,11 +174,9 @@ exports.checkUserCanBeCreated = function(req, res, next) {
     return next();
 };
 
-exports.storeNewUserAndSendRegistrationEmail = function(req, res, next)
-{
+exports.storeNewUserAndSendRegistrationEmail = function (req, res, next) {
     // if the user is already registered (not newly created), then return ok !
-    if(!req.user.isNew)
-    {
+    if (!req.user.isNew) {
         res.sendStatus(200);
         return;
     }
@@ -188,23 +185,20 @@ exports.storeNewUserAndSendRegistrationEmail = function(req, res, next)
     var user = req.user;
 
     async.waterfall([
-        function(done) {
-            crypto.randomBytes(20, function(err, buf) {
+        function (done) {
+            crypto.randomBytes(20, function (err, buf) {
                 var token = buf.toString('hex');
                 done(err, token);
             });
         },
-        function(token) {
+        function (token) {
 
             // use this token for email confirmation
             user.emailConfirmationToken = token;
 
-            user.save(function ( err )
-            {
-                if ( err )
-                {
-                    switch (err.code)
-                    {
+            user.save(function (err) {
+                if (err) {
+                    switch (err.code) {
                         case 11000:
                         case 11001:
                             return res.status(400).send('emailAlreadyTaken');
@@ -226,17 +220,15 @@ exports.storeNewUserAndSendRegistrationEmail = function(req, res, next)
                     message3: 'Connectez-vous au site et accéder à votre espace personnel en cliquant sur le lien suivant.',
                     link: 'http://' + req.headers.host + '/parametres'
                 };
-                mails.sendOne('basic', locals, function ( err )
-                {
+                mails.sendOne('basic', locals, function (err) {
                     console.log(err);
                 });
 
                 res.sendStatus(200);
             });
         }
-    ], function(err) {
-        if (err)
-        {
+    ], function (err) {
+        if (err) {
             console.error('Error unkown:');
             console.error(err);
             return res.status(500);
