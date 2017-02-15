@@ -3,7 +3,7 @@ const mongoose = require('mongoose'),
 
 const ProjectSchema = new Schema({
     name: String,
-    user: { type: Schema.ObjectId, ref: 'User' }
+    user: { type: Schema.ObjectId, ref: 'User', index: true }
 });
 
 mongoose.model('Project', ProjectSchema);

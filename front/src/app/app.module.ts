@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {HttpModule, RequestOptions, BaseRequestOptions, Headers} from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -15,6 +15,13 @@ import { ProjectModule } from "./project/project.module";
 import {AuthService} from "./shared/auth.service";
 import {AuthGuard} from "./shared/auth-guard.service";
 import {CookieService} from "./shared/cookie.service";
+
+export class MyBaseRequestsOptions extends BaseRequestOptions {
+    headers: Headers =  new Headers({
+      'X-Requested-With': 'XMLHttpRequest'
+    });
+    withCredentials: boolean = true;
+}
 
 @NgModule({
   declarations: [
@@ -36,7 +43,11 @@ import {CookieService} from "./shared/cookie.service";
   providers: [
     AuthService,
     AuthGuard,
-    CookieService
+    CookieService,
+    {
+      provide: RequestOptions,
+      useClass: MyBaseRequestsOptions
+    }
   ],
   bootstrap: [AppComponent]
 })

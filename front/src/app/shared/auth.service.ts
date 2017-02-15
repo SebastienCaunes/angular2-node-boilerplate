@@ -11,18 +11,21 @@ import 'rxjs/add/operator/map';
 export class AuthService {
 
   private isLogged: boolean = false;
+  public user: any;
 
   constructor(private cookeService : CookieService, private http: Http) {}
 
   isLoggedIn(): boolean {
-    return this.cookeService.getCookie(" token").length > 0;
+    return this.cookeService.getCookie("connect.sid").length > 0;
   }
 
   login(value): Observable<any> {
-    console.log(value);
-    return this.http.post(`${environment.apiBaseUrl}login`, value)
-              .map(response => response.json());
 
+      return this.http.post(`${environment.apiBaseUrl}login`,value)
+            .map(response => {
+                this.user = response.json();
+                response.json()
+              });
   }
 
   logout(): void {

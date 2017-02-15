@@ -3,11 +3,10 @@ const mongoose = require('mongoose'),
       _ = require('lodash');
 
 exports.projectsOfUser = (req, res) => {
-    console.log(req.user);
 
-    Project.find({ "user._id": req.user })
+    Project.find({ "user": req.user._id })
         .then(projects => {
-            console.log(projects);
+
             if(projects.length > 0) {
                 return res.status(200).json(projects);
             }

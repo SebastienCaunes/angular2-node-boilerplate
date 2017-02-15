@@ -41,6 +41,19 @@ module.exports = function (passport, db) {
     //Express use it to decode data in cookies
     app.use(cookieParser());
 
+    app.use(session({
+        resave: false, saveUninitialized: false, secret: config.sessionSecret, //Use to store the session in db
+        store: new MongoStore({
+            db: db.connection.db, collection: config.sessionCollection
+        }),
+        cookie: {
+            path: '/',
+            domain: 'localhost',
+            secure: false,
+            httpOnly: false
+        }
+    }));
+
     app.use(expressValidator());
 
     // Read request content
@@ -61,13 +74,6 @@ module.exports = function (passport, db) {
     // Enable jsonp
     app.enable('jsonp callback');
 
-    app.use(session({
-        resave: false, saveUninitialized: false, secret: config.sessionSecret, //Use to store the session in db
-        store: new MongoStore({
-            db: db.connection.db, collection: config.sessionCollection
-        })
-    }));
-
     // Use passport session
     app.use(passport.initialize());
     app.use(passport.session());
@@ -86,7 +92,7 @@ module.exports = function (passport, db) {
     // cross origin
     app.use(function(req, res, next) {
         res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        res.header('Access-Control-Allow-Origin', "http://localhost:4200");
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
         if ('OPTIONS' == req.method) {

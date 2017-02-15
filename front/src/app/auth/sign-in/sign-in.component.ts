@@ -24,7 +24,11 @@ export class SignInComponent {
 
     this.authService.login(value)
         .subscribe(
-            res => this.router.navigate(['/home']),
-            err => console.log(err));
+            res => {
+              console.log("bipp", this.authService.user);
+              this.router.navigate(['/home'])
+            },
+            err => console.log(err)
+            );
   }
 }
