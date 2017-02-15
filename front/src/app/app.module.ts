@@ -12,6 +12,9 @@ import { LostPasswordComponent } from './auth/lost-password/lost-password.compon
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component'
 import { ProjectModule } from "./project/project.module";
+import {AuthService} from "./shared/auth.service";
+import {AuthGuard} from "./shared/auth-guard.service";
+import {CookieService} from "./shared/cookie.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,11 @@ import { ProjectModule } from "./project/project.module";
     ProjectModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

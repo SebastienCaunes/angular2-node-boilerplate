@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { environment } from '../../../environments/environment';
+import {AuthService} from "../../shared/auth.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -14,17 +13,18 @@ export class SignInComponent {
 
   signInForm : FormGroup;
 
-  constructor(fb: FormBuilder,private http:Http){
+  constructor(fb: FormBuilder, private authService: AuthService, private router: Router){
     this.signInForm = fb.group({
       'email' : [null, Validators.required],
       'password' : [null, Validators.required],
     })
   }
 
-  submitForm(value: any):void{
+  submitForm(value: any) :void {
 
-    this.http.post(`${environment.apiBaseUrl}login`, value)
-      .subscribe( u => console.log(u),
-        err => console.error(err));
+    this.authService.login(value)
+        .subscribe(
+            res => this.router.navigate(['/home']),
+            err => console.log(err));
   }
 }
