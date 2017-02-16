@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpModule, RequestOptions, BaseRequestOptions, Headers, Http} from '@angular/http';
-
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { AppRoutesModule } from './app.routes';
@@ -39,13 +39,17 @@ export class MyBaseRequestsOptions extends BaseRequestOptions {
     ReactiveFormsModule,
     AppRoutesModule,
     ProjectModule,
-    HttpModule
+    HttpModule,
+    CommonModule
   ],
   providers: [
     AuthenticateHttpService,
     AuthService,
     AuthGuard,
-    { provide: Http, useClass: AuthenticateHttpService },
+    {
+      provide: Http,
+      useClass: AuthenticateHttpService
+    },
     CookieService,
     {
       provide: RequestOptions,

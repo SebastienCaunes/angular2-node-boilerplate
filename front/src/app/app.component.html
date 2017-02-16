@@ -8,19 +8,18 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li><a [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a></li>
-          <li><a [routerLink]="['/user']" [routerLinkActive]="['active']">My Account</a></li>
-          <li><a [routerLink]="['/signup']" [routerLinkActive]="['active']">Sign Up</a></li>
-          <li><a [routerLink]="['/signin']" [routerLinkActive]="['active']">Sign In</a></li>
-          <li><a [routerLink]="['/lostpassword']" [routerLinkActive]="['active']">Lost Password</a></li>
-          <li><a [routerLink]="['/projects/list']" [routerLinkActive]="['active']">Project</a></li>
-          <!--<li><a [routerLink]="['/project']" [routerLinkActive]="['active']">Projects</a></li>-->
-          <!--<li><a [routerLink]="['/order']" [routerLinkActive]="['active']">Order an Ice-Cream</a></li>-->
-          <!--<li><a href="#">See orders</a></li>-->
+          <li *ngIf="logged()"><a [routerLink]="['/user']" [routerLinkActive]="['active']">My Account</a></li>
+          <li *ngIf="!logged()"><a [routerLink]="['/signup']" [routerLinkActive]="['active']">Sign Up</a></li>
+          <li *ngIf="!logged()"><a [routerLink]="['/signin']" [routerLinkActive]="['active']">Sign In</a></li>
+          <li *ngIf="!logged()" ><a [routerLink]="['/lostpassword']" [routerLinkActive]="['active']">Lost Password</a></li>
+          <li *ngIf="logged()"><a [routerLink]="['/projects/list']" [routerLinkActive]="['active']">Project</a></li>
         </ul>
       </div>
     </div>
+    <div>
+      <button *ngIf="logged()" (click)="logout()">logout</button>
+    </div>
   </nav>
-  <!--<app-login></app-login>-->
 </header>
 
 <router-outlet></router-outlet>

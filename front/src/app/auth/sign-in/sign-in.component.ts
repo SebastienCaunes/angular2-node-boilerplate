@@ -25,8 +25,12 @@ export class SignInComponent {
     this.authService.login(value)
         .subscribe(
             res => {
-              console.log("bipp", this.authService.user);
-              this.router.navigate(['/home'])
+              if(this.authService.redirectUrl.toString() !== "") {
+                this.router.navigate([this.authService.redirectUrl]);
+              }
+              else {
+                this.router.navigate(['/home'])
+              }
             },
             err => console.log(err)
             );
