@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpModule, RequestOptions, BaseRequestOptions, Headers} from '@angular/http';
+import {HttpModule, RequestOptions, BaseRequestOptions, Headers, Http} from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -15,6 +15,7 @@ import { ProjectModule } from "./project/project.module";
 import {AuthService} from "./shared/auth.service";
 import {AuthGuard} from "./shared/auth-guard.service";
 import {CookieService} from "./shared/cookie.service";
+import {AuthenticateHttpService} from "./shared/authenticateHttp.service";
 
 export class MyBaseRequestsOptions extends BaseRequestOptions {
     headers: Headers =  new Headers({
@@ -41,8 +42,10 @@ export class MyBaseRequestsOptions extends BaseRequestOptions {
     HttpModule
   ],
   providers: [
+    AuthenticateHttpService,
     AuthService,
     AuthGuard,
+    { provide: Http, useClass: AuthenticateHttpService },
     CookieService,
     {
       provide: RequestOptions,
